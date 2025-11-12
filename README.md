@@ -1,135 +1,89 @@
-# 🩺 Medical Outcome Prediction (Regression Model)
+# 📈 Stock Sentiment Analysis
 
-This project focuses on predicting a **continuous medical outcome** (e.g., disease progression score, hospital stay length, or treatment response) using **multi-modal clinical and laboratory data**.
+## ⭐ Description
 
----
+Stock Sentiment Analysis evaluates the emotional tone in text sources (news, social media, financial reports) related to a stock to determine whether sentiment is **positive, negative, or neutral**.
 
-## 📁 Project Structure
-
-```
-├── data/                 # Dataset files
-├── notebooks/            # Jupyter notebooks for EDA & modeling
-├── src/                  # Source code
-│   ├── preprocessing.py  # Cleaning & encoding
-│   ├── models.py         # ML models
-│   └── utils.py          # Helper functions
-├── results/              # Outputs & evaluation metrics
-└── README.md             # Project description
-```
+Public opinions heavily influence investor behavior and market price movement. Positive outlook may lead to rising prices, while negative sentiment may trigger selling and price drops.
 
 ---
 
-## 🧠 Problem Statement
+## ✅ Why Sentiment Matters
 
-Predict a **continuous medical value** using a dataset containing:
-✅ Demographics
-✅ Physiological signals
-✅ Imaging data
-✅ Genetic data (if available)
-✅ Lab test results
+* Market is influenced by psychology
+* Positive sentiment → buy → price increases
+* Negative sentiment → sell → price decreases
 
-The goal is to develop a model that provides accurate predictions while addressing real-world dataset challenges.
-
----
-
-## 📊 Key Steps
-
-### ✅ 1. Data Preprocessing
-
-* Handling missing values
-* Encoding categorical variables
-* Outlier detection
-* Train/test split
-
-### ✅ 2. Feature Engineering
-
-* Domain knowledge-based feature creation
-* Normalization & scaling
-
-### ✅ 3. Model Development
-
-Multiple models were trained and evaluated:
-
-| Model             | Description                                 | RMSE | MAE | R² |
-| ----------------- | ------------------------------------------- | ---- | --- | -- |
-| Linear Regression | Baseline model                              | —    | —   | —  |
-| Lasso Regression  | L1 regularization to reduce noise           | —    | —   | —  |
-| Ridge Regression  | L2 regularization to stabilize coefficients | —    | —   | —  |
-| XGBoost           | Ensemble model for non-linear patterns      | —    | —   | —  |
-
-> 🔹 Replace `—` with your actual results.
+| Example Text                     | Sentiment |
+| -------------------------------- | --------- |
+| "Company reports record profits" | Positive  |
+| "Company under investigation"    | Negative  |
 
 ---
 
-## 🧾 Model Training Code Example
+## 📂 Data Sources
+
+* News headlines
+* Twitter / X posts
+* Reddit comments
+* Financial blogs
+* Company reports
+
+---
+
+## 🔧 How It Works
+
+1. Collect data
+2. Clean and preprocess text
+3. Convert text to numerical form (TF-IDF/Word2Vec/BERT)
+4. Apply sentiment models
+
+   * Rule-based (VADER)
+   * ML / DL models
+5. Output sentiment score (pos/neg/neutral)
+
+---
+
+## ✅ Example Code (VADER)
 
 ```python
-from sklearn.linear_model import Ridge, Lasso
-from xgboost import XGBRegressor
-from sklearn.metrics import mean_absolute_error
+from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
-models = {
-    'Ridge': Ridge(alpha=1.0),
-    'Lasso': Lasso(alpha=0.1),
-    'XGBoost': XGBRegressor()
-}
+analyzer = SentimentIntensityAnalyzer()
 
-for name, model in models.items():
-    model.fit(X_train, y_train)
-    preds = model.predict(X_test)
-    print(name, mean_absolute_error(y_test, preds))
+text = "Stock price of Tesla is expected to rise after strong earnings!"
+score = analyzer.polarity_scores(text)
+
+print(score)
+```
+
+Example output:
+
+```
+{'neg': 0.02, 'neu': 0.30, 'pos': 0.68, 'compound': 0.90}
 ```
 
 ---
 
-## 📈 Evaluation
+## 📊 Applications
 
-* RMSE
-* MAE
-* R²
-
-Store metric outputs in `/results/`.
+* Stock trend forecasting
+* Portfolio management
+* Market monitoring
+* Risk analysis
 
 ---
 
-## 🚀 How to Run
+## ✅ In Stock Prediction Models
 
-```bash
-# Clone repo
-git clone <repo-url>
-cd project
+SentimentScore can be used as a feature:
 
-# Install requirements
-pip install -r requirements.txt
-
-# Run training
-python src/models.py
+```
+Close, Volume, MA_5, Lag_1, SentimentScore
 ```
 
 ---
 
-## 🔮 Future Improvements
+## 📈 Insights
 
-* Hyperparameter tuning
-* Interpretability (SHAP, LIME)
-* Deployment (FastAPI / Flask)
-* Visualization dashboard
-
----
-
-## 🏷 License
-
-MIT License
-
----
-
-## ✨ Acknowledgment
-
-* Dataset sources
-* Open-source tools
-
----
-
-## 🙌 Contributing
-
-Pull requests are welcome!
+Sentiment combined with technical indicators helps improve prediction performance and interpret market psychology.
